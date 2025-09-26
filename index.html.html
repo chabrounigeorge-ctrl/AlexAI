@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alexandrion - Curated Spirits</title>
+
+  <style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d1b3d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .logo p {
+            color: #b8b8b8;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .screen {
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .question-title {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .option:hover:before {
+            left: 100%;
+        }
+        
+        .option:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .age-verification {
+            text-align: center;
+        }
+        
+        .age-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-yes {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #1a1a2e;
+        }
+        
+        .btn-no {
+            background: transparent;
+            color: #999;
+            border: 2px solid #666;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .product-name {
+            font-size: 1.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .product-category {
+            color: #999;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .product-description {
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+        
+        .product-notes {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #b8b8b8;
+        }
+        
+        .restart-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .warning {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85em;
+            color: #d4af37;
+        }@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.02), transparent 50%);
+            animation: drift 20s infinite alternate;
+        }
+        
+        @keyframes drift {
+            to {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 500px;
+            width: 90%;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+            animation: containerEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes containerEntry {
+            from { 
+                opacity: 0; 
+                transform: scale(0.9) translateY(30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8em;
+            font-weight: 400;
+            letter-spacing: 8px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #d4af37 50%, #fff 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .logo p {
+            font-size: 0.75em;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 300;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+        
+        .screen {
+            display: none;
+            opacity: 0;
+        }
+        
+        .screen.active {
+            display: block;
+            animation: screenFade 0.5s forwards;
+        }
+        
+        @keyframes screenFade {
+            to { opacity: 1; }
+        }
+        
+        .question-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.4;
+            color: #fff;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 0.85em;
+            color: #888;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+        }
+        
+        .age-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #fff;
+            font-size: 0.9em;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #d4af37;
+            transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 0;
+        }
+        
+        .btn:hover {
+            color: #000;
+            border-color: #d4af37;
+            transform: translateY(-2px);
+        }
+        
+        .btn-yes {
+            background: #fff;
+            color: #000;
+            border: none;
+            font-weight: 500;
+        }
+        
+        .btn-yes::before {
+            background: #d4af37;
+        }
+        
+        .btn-yes:hover {
+            color: #000;
+        }
+        
+        .btn-no {
+            opacity: 0.6;
+        }
+        
+        .progress-bar {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #d4af37;
+            transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 22px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            font-size: 0.95em;
+            letter-spacing: 0.5px;
+        }
+        
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+        
+        .option:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .option:hover {
+            border-color: #d4af37;
+            transform: translateX(10px);
+            color: #d4af37;
+        }
+        
+        .option-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .option-label {
+            flex: 1;
+        }
+        
+        .option-icon {
+            font-size: 1.2em;
+            margin-right: 15px;
+            opacity: 0.7;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 35px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: productSlide 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        @keyframes productSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-rank {
+            position: absolute;
+            top: 35px;
+            right: 35px;
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            color: rgba(212, 175, 55, 0.15);
+            font-style: italic;
+        }
+        
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .product-category {
+            font-size: 0.75em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .product-description {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .product-notes {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+        
+        .restart-btn {
+            width: 100%;
+            margin-top: 40px;
+            padding: 18px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 0.85em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+        
+        .restart-btn:hover {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .disclaimer {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 0.7em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            .logo h1 {
+                font-size: 2.2em;
+                letter-spacing: 4px;
+            }
+            
+            .option {
+                padding: 18px 20px;
+            }
+        }
+  </style>
+
+  
+</head>
+<body>
+  <div class="container">
+        <div class="logo">
+            <h1>ALEXANDRION</h1>
+            <p>Curated Spirits</p>
+        </div>
+        
+        <!-- Age Verification -->
+        <div id="age-screen" class="screen active">
+            <h2 class="question-title">Welcome to Our World</h2>
+            <p class="subtitle">Please confirm your age to continue</p>
+            <div class="age-buttons">
+                <button class="btn btn-yes" onclick="startQuiz()">I AM 21 OR OLDER</button>
+                <button class="btn btn-no" onclick="underAge()">I AM UNDER 21</button>
+            </div>
+        </div>
+        
+        <!-- Quiz -->
+        <div id="quiz-screen" class="screen">
+            <div class="progress-bar">
+                <div id="progress" class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div id="quiz-content"></div>
+        </div>
+        
+        <!-- Results -->
+        <div id="results-screen" class="screen">
+            <h2 class="question-title">Your Selection</h2>
+            <p class="subtitle">Personally curated for your palate</p>
+            <div id="recommendations"></div>
+            <button class="restart-btn" onclick="resetQuiz()">Begin Again</button>
+            <div class="disclaimer">Enjoy Responsibly</div>
+        </div>
+        
+        <!-- Under Age -->
+        <div id="underage-screen" class="screen">
+            <h2 class="question-title">We Look Forward to Your Visit</h2>
+            <p class="subtitle">Please return when you are of legal drinking age</p>
+        </div>
+    </div>
+
+  <script>
+    const questions = [
+            {
+                id: 'occasion',
+                question: 'What\'s the occasion?',
+                options: [
+                    { value: 'celebration', label: '🎉 Special Celebration' },
+                    { value: 'dinner', label: '🍽️ Dinner Party' },
+                    { value: 'gift', label: '🎁 Gift for Someone' },
+                    { value: 'casual', label: '🥃 Casual Evening' },
+                    { value: 'collection', label: '📚 Adding to Collection' }
+                ]
+            },
+            {
+                id: 'type',
+                question: 'What type of spirit calls to you?',
+                options: [
+                    { value: 'brandy', label: '🥃 Traditional Romanian Brandy (Vinars)' },
+                    { value: 'vodka', label: '🍸 Premium Vodka' },
+                    { value: 'wine', label: '🍷 Fine Wine' },
+                    { value: 'liqueur', label: '🍹 Flavored Liqueur' },
+                    { value: 'surprise', label: '✨ Surprise Me!' }
+                ]
+            },
+            {
+                id: 'flavor',
+                question: 'Which flavor profile appeals to you?',
+                options: [
+                    { value: 'smooth', label: 'Smooth & Refined' },
+                    { value: 'bold', label: 'Bold & Complex' },
+                    { value: 'fruity', label: 'Fruity & Sweet' },
+                    { value: 'traditional', label: 'Traditional & Authentic' },
+                    { value: 'crisp', label: 'Crisp & Clean' }
+                ]
+            },
+            {
+                id: 'experience',
+                question: 'How would you describe your spirits experience?',
+                options: [
+                    { value: 'curious', label: '🌱 Curious Beginner' },
+                    { value: 'casual', label: '🥂 Casual Enthusiast' },
+                    { value: 'connoisseur', label: '🎩 Connoisseur' },
+                    { value: 'adventurous', label: '🗺️ Adventurous Explorer' }
+                ]
+            }
+        ];
+        
+        const products = {
+            'Brâncoveanu XO': {
+                category: 'Premium Vinars',
+                description: 'An exceptional Romanian brandy aged in oak barrels. Rich, complex flavors with notes of vanilla, dried fruits, and a hint of honey.',
+                notes: 'Perfect for special celebrations or as a distinguished gift. Best enjoyed neat or with a single ice cube.',
+                matches: ['celebration', 'gift', 'collection', 'brandy', 'bold', 'traditional', 'connoisseur']
+            },
+            'Brâncoveanu VS': {
+                category: 'Traditional Vinars',
+                description: 'A classic Romanian brandy with smooth character. Balanced oak notes with subtle fruit undertones.',
+                notes: 'Ideal for dinner parties or casual evening sipping. Excellent value for traditional Romanian spirit lovers.',
+                matches: ['dinner', 'casual', 'brandy', 'smooth', 'traditional', 'casual', 'curious']
+            },
+            'Kreskova Premium Vodka': {
+                category: 'Premium Vodka',
+                description: 'Ultra-premium vodka with exceptional purity. Six-times distilled for unparalleled smoothness.',
+                notes: 'Perfect for premium cocktails or sipping chilled. The choice of vodka connoisseurs.',
+                matches: ['celebration', 'dinner', 'vodka', 'smooth', 'crisp', 'connoisseur', 'adventurous']
+            },
+            'Kreskova Classic': {
+                category: 'Vodka',
+                description: 'Smooth, clean vodka perfect for mixing. Triple-distilled for purity and clarity.',
+                notes: 'Versatile spirit for cocktails or traditional serving. Great for casual gatherings.',
+                matches: ['casual', 'vodka', 'crisp', 'smooth', 'casual', 'curious']
+            },
+            'Saber Elyzia': {
+                category: 'Liqueur',
+                description: 'Premium liqueur with exotic fruit notes. A perfect balance of sweetness and sophistication.',
+                notes: 'Excellent as a digestif or in creative cocktails. Appeals to those seeking unique flavors.',
+                matches: ['dinner', 'gift', 'liqueur', 'fruity', 'smooth', 'adventurous', 'curious']
+            },
+            'Alexandrion 5*': {
+                category: 'Premium Brandy',
+                description: 'Five-star Romanian brandy with refined character. Aged to perfection with complex flavor layers.',
+                notes: 'A prestigious choice for collectors and special occasions. Represents Romanian distilling excellence.',
+                matches: ['celebration', 'collection', 'gift', 'brandy', 'bold', 'traditional', 'connoisseur']
+            },
+            'Alexandrion 7*': {
+                category: 'Ultra-Premium Brandy',
+                description: 'Seven-star brandy representing the pinnacle of Romanian spirits. Exceptional aging and masterful blending.',
+                notes: 'The ultimate expression of luxury. Reserved for the most special moments.',
+                matches: ['celebration', 'collection', 'gift', 'brandy', 'bold', 'traditional', 'connoisseur', 'surprise']
+            }
+        };
+        
+        let currentQuestion = 0;
+        let answers = {};
+        
+        function startQuiz() {
+            document.getElementById('age-screen').classList.remove('active');
+            document.getElementById('quiz-screen').classList.add('active');
+            showQuestion();
+        }
+        
+        function underAge() {
+            document.getElementById('age-screen').classList.remove('active');
+            document.getElementById('underage-screen').classList.add('active');
+        }
+        
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            let html = `
+                <h2 class="question-title">${question.question}</h2>
+                <div class="options">
+            `;
+            
+            question.options.forEach(option => {
+                html += `
+                    <div class="option" onclick="selectAnswer('${question.id}', '${option.value}')">
+                        ${option.label}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+        
+        function selectAnswer(questionId, value) {
+            answers[questionId] = value;
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function calculateRecommendations() {
+            const scores = {};
+            
+            // Calculate match scores for each product
+            for (const [productName, productInfo] of Object.entries(products)) {
+                scores[productName] = 0;
+                
+                // Check how many user answers match product tags
+                Object.values(answers).forEach(answer => {
+                    if (productInfo.matches.includes(answer)) {
+                        scores[productName] += 2;
+                    }
+                });
+                
+                // Bonus for surprise selections
+                if (answers.type === 'surprise' && productName.includes('7*')) {
+                    scores[productName] += 3;
+                }
+            }
+            
+            // Sort products by score and return top 3
+            const sortedProducts = Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([name, score]) => name);
+            
+            return sortedProducts;
+        }
+        
+        function showResults() {
+            document.getElementById('quiz-screen').classList.remove('active');
+            document.getElementById('results-screen').classList.add('active');
+            
+            const recommendations = calculateRecommendations();
+            let html = '';
+            
+            recommendations.forEach((productName, index) => {
+                const product = products[productName];
+                const delay = index * 0.2;
+                html += `
+                    <div class="product-card" style="animation-delay: ${delay}s">
+                        <div class="product-name">${productName}</div>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-notes">
+                            <strong>Sommelier Notes:</strong> ${product.notes}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('recommendations').innerHTML = html;
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            document.getElementById('results-screen').classList.remove('active');
+            document.getElementById('age-screen').classList.add('active');
+        }const questions = [
+            {
+                id: 'moment',
+                question: 'Define Your Moment',
+                options: [
+                    { value: 'intimate', label: 'Intimate Gathering', icon: '◆' },
+                    { value: 'celebration', label: 'Grand Celebration', icon: '◇' },
+                    { value: 'contemplation', label: 'Quiet Contemplation', icon: '○' },
+                    { value: 'discovery', label: 'New Discovery', icon: '△' }
+                ]
+            },
+            {
+                id: 'spirit',
+                question: 'Select Your Spirit',
+                options: [
+                    { value: 'brandy', label: 'Heritage Brandy', icon: '' },
+                    { value: 'vodka', label: 'Pure Vodka', icon: '' },
+                    { value: 'wine', label: 'Fine Wine', icon: '' },
+                    { value: 'curated', label: 'Curator\'s Choice', icon: '' }
+                ]
+            },
+            {
+                id: 'profile',
+                question: 'Your Taste Profile',
+                options: [
+                    { value: 'refined', label: 'Refined & Subtle', icon: '' },
+                    { value: 'bold', label: 'Bold & Complex', icon: '' },
+                    { value: 'classic', label: 'Classic & Timeless', icon: '' },
+                    { value: 'avant', label: 'Avant-Garde', icon: '' }
+                ]
+            },
+            {
+                id: 'journey',
+                question: 'Your Journey',
+                options: [
+                    { value: 'initiate', label: 'The Initiate', icon: '' },
+                    { value: 'traveler', label: 'The Traveler', icon: '' },
+                    { value: 'connoisseur', label: 'The Connoisseur', icon: '' },
+                    { value: 'collector', label: 'The Collector', icon: '' }
+                ]
+            }
+        ];
+        
+        const products = {
+            'Alexandrion 7 Stele': {
+                category: 'Ultra-Premium Reserve',
+                description: 'Our crown jewel. Seven stars represent seven years of patient maturation, resulting in unparalleled complexity and depth. Each bottle is a testament to Romanian distilling mastery.',
+                notes: 'Notes of dark chocolate, tobacco leaf, and honeyed oak. A transcendent experience.',
+                matches: ['celebration', 'contemplation', 'brandy', 'bold', 'classic', 'connoisseur', 'collector', 'curated']
+            },
+            'Alexandrion 5 Stele': {
+                category: 'Premium Reserve',
+                description: 'Five stars marking five years of oak aging. A sophisticated spirit that balances tradition with refinement, embodying the essence of Romanian heritage.',
+                notes: 'Vanilla, dried apricot, and subtle spice. Remarkably smooth with a lasting finish.',
+                matches: ['intimate', 'celebration', 'brandy', 'refined', 'classic', 'traveler', 'connoisseur']
+            },
+            'Brâncoveanu XO': {
+                category: 'Exclusive Vinars',
+                description: 'Extra Old designation for extraordinary character. A noble spirit with aristocratic bearing, crafted for those who appreciate the finer things.',
+                notes: 'Rich caramel, fig, and aged leather. Each sip reveals new dimensions.',
+                matches: ['intimate', 'contemplation', 'brandy', 'bold', 'classic', 'connoisseur', 'collector']
+            },
+            'Kreskova Premium': {
+                category: 'Artisan Vodka',
+                description: 'Six-fold distillation achieves pristine purity. Crystal clarity meets velvet smoothness in this exceptional vodka.',
+                notes: 'Clean, crisp, with subtle grain sweetness. Exceptional neat or in craft cocktails.',
+                matches: ['intimate', 'celebration', 'vodka', 'refined', 'avant', 'traveler', 'connoisseur']
+            },
+            'Brâncoveanu VS': {
+                category: 'Classic Vinars',
+                description: 'Very Special indeed. Our traditional vinars offers authentic Romanian character with approachable elegance.',
+                notes: 'Fresh oak, honey, and orchard fruits. Beautifully balanced and versatile.',
+                matches: ['intimate', 'discovery', 'brandy', 'refined', 'classic', 'initiate', 'traveler']
+            },
+            'Saber Elyzia': {
+                category: 'Luxury Liqueur',
+                description: 'An exotic elixir that defies convention. Bold, mysterious, and utterly captivating.',
+                notes: 'Tropical fruits meet European sophistication. A conversation starter.',
+                matches: ['celebration', 'discovery', 'curated', 'avant', 'bold', 'traveler', 'initiate']
+            }
+        };
+        
+        let currentQuestion = 0;
+        let answers = {};
+        
+        function startQuiz() {
+            document.getElementById('age-screen').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('quiz-screen').classList.add('active');
+                showQuestion();
+            }, 300);
+        }
+        
+        function underAge() {
+            document.getElementById('age-screen').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('underage-screen').classList.add('active');
+            }, 300);
+        }
+        
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            let html = `
+                <h2 class="question-title">${question.question}</h2>
+                <div class="options">
+            `;
+            
+            question.options.forEach(option => {
+                html += `
+                    <div class="option" onclick="selectAnswer('${question.id}', '${option.value}')">
+                        <div class="option-content">
+                            <span class="option-label">${option.label}</span>
+                            <span class="option-icon">${option.icon}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+        
+        function selectAnswer(questionId, value) {
+            answers[questionId] = value;
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                setTimeout(() => showQuestion(), 200);
+            } else {
+                setTimeout(() => showResults(), 200);
+            }
+        }
+        
+        function calculateRecommendations() {
+            const scores = {};
+            
+            for (const [productName, productInfo] of Object.entries(products)) {
+                scores[productName] = 0;
+                
+                Object.values(answers).forEach(answer => {
+                    if (productInfo.matches.includes(answer)) {
+                        scores[productName] += 2;
+                    }
+                });
+                
+                // Premium bonus for curator's choice
+                if (answers.spirit === 'curated' && productName.includes('7 Stele')) {
+                    scores[productName] += 4;
+                }
+            }
+            
+            return Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([name]) => name);
+        }
+        
+        function showResults() {
+            document.getElementById('quiz-screen').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('results-screen').classList.add('active');
+                
+                const recommendations = calculateRecommendations();
+                let html = '';
+                
+                recommendations.forEach((productName, index) => {
+                    const product = products[productName];
+                    const delay = index * 0.15;
+                    html += `
+                        <div class="product-card" style="animation-delay: ${delay}s">
+                            <div class="product-rank">${index + 1}</div>
+                            <div class="product-name">${productName}</div>
+                            <div class="product-category">${product.category}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-notes">${product.notes}</div>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('recommendations').innerHTML = html;
+            }, 300);
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            document.getElementById('results-screen').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('age-screen').classList.add('active');
+            }, 300);
+        }
+  </script>
+</body>
+</html>
