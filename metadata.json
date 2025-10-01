@@ -1,0 +1,7 @@
+{
+  "name": "Alex - Alexandrion Voice Assistant",
+  "description": "A voice-based store assistant for Alexandrion Group Romania. The assistant, Alex, helps customers find the perfect drink through natural conversation and personalized recommendations.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
